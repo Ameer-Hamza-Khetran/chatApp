@@ -10,8 +10,10 @@ db.on("connected", () => {
     console.log("db connection successful hamza");
 });
 
-db.on("err", () => {
+db.on("error", (err) => {
     console.log("db connection failed");
+    console.log(err);
+    
 });
 
 module.exports = db;
