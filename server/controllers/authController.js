@@ -40,7 +40,7 @@ router.post("/login", async (req, res) => {
     try {
         //1 check if user already exists in the db with the same email as req body
         const user = await User.findOne({ email: req.body.email }).select("+password");
-        console.log(user)
+
         if (!user) {
             return res.status(400).send({
                 message: "User does not exist",
