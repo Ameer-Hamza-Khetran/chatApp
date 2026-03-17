@@ -35,4 +35,31 @@ route.post('/new-message', authMiddleware, async (req, res) => {
     }
 })
 
+route.get('/get-all-messages/:chatId', authMiddleware, async (req, res) => {
+    try {
+        const allMessages = await Message.find(
+            {
+                chatId: req.params.chatId
+            }
+        ).sort(
+            {
+                createdAt: 1
+            }
+        )
+        res.status(200).send(
+            {
+                message: 'All messages fetched successfully', 
+                success: true,
+                data: allMessages
+            }
+        )
+    } catch (error) {
+        res.status(400).send(
+            {
+                message: error.message,
+                success: false
+            }
+        )
+    }
+})
 module.exports = route;
