@@ -1,14 +1,27 @@
 import React from "react"
 import { Link } from "react-router-dom";
+import { loginUser } from "../../apiCalls/auth";
 
 function Login() {
     const [user, setUser] = React.useState({
         email: '',
         password: ''
     })
-    function onFormSubmit(e) {
+    async function onFormSubmit(e) {
         e.preventDefault();
-        console.log(user);        
+        let response = null;
+        try {
+            response = await loginUser(user)
+            if (response.success) {
+                alert(response.message)
+                localStorage.setItem('token', response.token)
+                window.location.href = '/'
+            } else {
+                alert(response.message)
+            }
+        } catch (error) {
+            alert(response.message)
+        }
     }
     return (
         <div className="container">
