@@ -2,4 +2,11 @@ node_modules/
 .env
 dist/
 npm-debug.log
-server/node_modules
+
+# client & server
+client/node_modules/
+server/node_modules/
+
+# env files
+config.env
+server/config.env
