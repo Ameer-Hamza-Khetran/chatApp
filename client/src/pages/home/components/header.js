@@ -1,4 +1,4 @@
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 
 function Header() {
     const { user } = useSelector(state => state.userReducer);
