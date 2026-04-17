@@ -1,3 +1,4 @@
+import ChatArea from "./components/chat"
 import Header from "./components/header"
 import Sidebar from "./components/sidebar"
 
@@ -7,7 +8,7 @@ function Home() {
             <div className="main-content">
                 <Header></Header>
                 <Sidebar></Sidebar>
-                {/* <!--CHAT AREA LAYOUT--> */}
+                <ChatArea></ChatArea>
             </div>
         </div>
     )
