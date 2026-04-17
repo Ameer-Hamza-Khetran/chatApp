@@ -19,6 +19,7 @@ function UsersList({searchKey}) {
                 const newChat = response.data;                    
                 const updatedChat = [...allChats, newChat]
                 dispatch(setAllchats(updatedChat))
+                dispatch(setSelectedChats(newChat))
             }
         } catch (error) {
             toast.error(response.message)
