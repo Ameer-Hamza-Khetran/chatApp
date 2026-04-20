@@ -26,7 +26,7 @@ router.get("/get-all-chats", authMiddleware, async (req, res) => {
             members: {
                 $in: req.userId
             }
-        })
+        }).populate('members').sort({updatedAt: -1})
         res.status(200).send({
             message: "Chats fetched successfully",
             success: true,
