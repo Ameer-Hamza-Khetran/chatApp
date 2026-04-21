@@ -3,6 +3,7 @@ import toast from 'react-hot-toast';
 import { createNewChat } from "../../../apiCalls/chat";
 import { showLoader, hideLoader } from '../../../redux/loaderSlice';
 import { setAllchats, setSelectedChats } from '../../../redux/userSlice';
+import moment from 'moment';
 
 function UsersList({searchKey}) {
     const { allUsers, allChats, user: currentUser, selectedChat } = useSelector((state) => state.userReducer);
@@ -47,6 +48,31 @@ function UsersList({searchKey}) {
         return false
     }
 
+    const getLastMessage = (userId) => {
+        const chat = allChats.find(chat => chat.members.map(m => m._id).includes(userId))
+        if (!chat) {
+            return '';
+        } else {
+            const msgPrefix = chat?.lastMessage?.sender === currentUser._id ? "You: " : '';
+            return msgPrefix + chat?.lastMessage?.text?.substring(0, 25);
+        }
+    }
+
+    const getLastMessageTimestamp = (userId) => {
+        const chat = allChats.find(chat => chat.members.map(m => m._id).includes(userId))
+        if (!chat && chat?.lastMessage) {
+            return '';
+        } else {
+            return moment(chat?.lastMessage?.createdAt).format('hh:mm A')
+        }
+    }
+
+    const formatName = (user) => {
+        let fname = user.firstname.at(0).toUpperCase() + user.firstname.slice(1).toLowerCase();
+        let lname = user.lastname.at(0).toUpperCase() + user.lastname.slice(1).toLowerCase();
+        return fname + ' ' + lname;
+    }
+
     return (
         allUsers.filter(user => {
             return (
@@ -72,9 +98,10 @@ function UsersList({searchKey}) {
                         }
                     </div>}
                     <div className="filter-user-details">
-                        <div className="user-display-name">{user.firstname + ' ' + user.lastname}
-                            <div className="user-display-email">{user.email}</div>
+                        <div className="user-display-name">{formatName(user)}
+                            <div className="user-display-email">{getLastMessage(user._id) || user.email}</div>
                         </div>
+                        <div className="last-message-timestamp">{getLastMessageTimestamp(user._id)}</div>
                         { !allChats.find(chat => chat.members.map(m => m._id).includes(user._id)) &&
                             <div className="user-start-chat">
                                 <button className="user-start-chat-btn" onClick={() => startNewChat(user._id)}>

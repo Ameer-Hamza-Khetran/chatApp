@@ -53,7 +53,7 @@ function ChatArea() {
         const diff = now.diff(moment(timestamp), 'days')
 
         if (diff < 1) {
-            return `Today ${moment(timestamp.format('hh:mm A'))}`
+            return `Today ${moment(timestamp).format('hh:mm A')}`
         }
         else if (diff == 1) {
             return `Yesterday ${moment(timestamp).format('hh:mm A')}`;
@@ -61,6 +61,12 @@ function ChatArea() {
         else {
             return moment(timestamp).format('MMM D, hh:mm A')
         }
+    }
+
+    const formatName = (user) => {
+        let fname = user.firstname.at(0).toUpperCase() + user.firstname.slice(1).toLowerCase();
+        let lname = user.lastname.at(0).toUpperCase() + user.lastname.slice(1).toLowerCase();
+        return fname + ' ' + lname;
     }
 
     useEffect(() => {
@@ -72,7 +78,7 @@ function ChatArea() {
             {selectedChat && 
                 <div className="app-chat-area">
                     <div className="app-chat-area-header">
-                        {selectedUser.firstname + ' ' + selectedUser.lastname}
+                        {formatName(selectedUser)}
                     </div>
                     <div className="main-chat-area">
                         {
