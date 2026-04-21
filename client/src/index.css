@@ -7,6 +7,10 @@
   font-family: "Poppins", sans-serif;
 }
 
+body {
+  overflow-y: hidden;
+}
+
 
 /*******************************************************
 *************CSS STYLES FOR LOGIN & SIGNUP**************
@@ -344,7 +348,7 @@ i{
   border-radius: 10px;
   display: flex;
   flex-direction: column;
-  min-height: 70vh;
+  height: 70vh;
 }
 
 /*******************************************************
@@ -363,11 +367,14 @@ i{
 ********CSS STYLES FOR CHAT AREA & CHAT INPUT***********
 ********************************************************/
 .main-chat-area{
-    flex: 1
+    flex: 1;
+    overflow-y: scroll;
+    padding: 10px 20px;
 }
 
 .send-message-div{
     position: relative;
+    margin-top: 20px;
 }
 
 .send-message-input{
@@ -392,6 +399,30 @@ i{
 }
 
 /*******************************************************
+********CSS CHANGES FOR CUSTOM SCROLL BAR***************
+********************************************************/
+
+.app-chat-area-header{
+    padding: 10px 30px;
+    margin-bottom: 20px;
+    border-bottom: #bbb 1px solid;
+    text-align: right;
+    font-weight: bold;
+    color: #e74c3c;
+}
+
+.main-chat-area{
+    flex: 1;
+    overflow-y: scroll;
+    padding: 10px 20px;
+}
+
+.send-message-div{
+    position: relative;
+    margin-top: 20px;
+}
+
+/*******************************************************
 ***************CSS FOR CHAT MESSAGES********************
 ********************************************************/
 .message-container{
@@ -400,7 +431,7 @@ i{
 .send-message, .received-message{
     padding: 10px 20px;
     margin-top: 5px;
-    border-radius: 3px;
+    border-radius: 10px;
     font-size: 14px;
     width: fit-content;
 }
@@ -409,10 +440,35 @@ i{
     background-color: #e74c3c;
     color: white;
     margin-left: 100px;
+    border-top-right-radius: 0px;
 }
 
 .received-message{ 
     background-color: #ddd;
     color: #28282B;
     margin-right: 100px;
+    border-bottom-left-radius: 0px;
+}
+.message-timestamp {
+  width: fit-content;
+  font-size: 13px;
+}
+
+/*****************************************************
+************MEDIA QUERY FOR USER LIST*****************
+******************************************************/
+
+@media only screen and (max-width: 1000px) {
+    .filter-user-details {
+      display: none;
+    }
+    .user-search-area {
+        display: none;
+    }
+    .app-sidebar{
+        width: 15%;
+    }
+    .app-chat-area{
+        width: 85%
+    }
 }
