@@ -13,10 +13,10 @@ const userSlice = createSlice(
             setUser: (state, action) => {state.user = action.payload},
             setAllUsers: (state, action) => {state.allUsers = action.payload},
             setAllchats: (state, action) => {state.allChats = action.payload},
-            setSelectedChats: (state, action) => {state.selectedChat = action.payload},
+            setSelectedChat: (state, action) => {state.selectedChat = action.payload},
         }
     }
 )
 
-export const { setUser, setAllUsers, setAllchats, setSelectedChats } = userSlice.actions
+export const { setUser, setAllUsers, setAllchats, setSelectedChat } = userSlice.actions
 export default userSlice.reducer

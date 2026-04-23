@@ -2,7 +2,7 @@ import { useSelector, useDispatch } from "react-redux"
 import toast from 'react-hot-toast';
 import { createNewChat } from "../../../apiCalls/chat";
 import { showLoader, hideLoader } from '../../../redux/loaderSlice';
-import { setAllchats, setSelectedChats } from '../../../redux/userSlice';
+import { setAllchats, setSelectedChat } from '../../../redux/userSlice';
 import moment from 'moment';
 
 function UsersList({searchKey}) {
@@ -18,10 +18,10 @@ function UsersList({searchKey}) {
 
             if (response.success) {
                 toast.success(response.message);
-                const newChat = response.data;                    
+                const newChat = response.data;
                 const updatedChat = [...allChats, newChat]
                 dispatch(setAllchats(updatedChat))
-                dispatch(setSelectedChats(newChat))
+                dispatch(setSelectedChat(newChat))
             }
         } catch (error) {
             toast.error(response.message)
@@ -37,7 +37,7 @@ function UsersList({searchKey}) {
         )
 
         if (chat) {            
-            dispatch(setSelectedChats(chat))
+            dispatch(setSelectedChat(chat))
         }
     }
     
@@ -50,7 +50,7 @@ function UsersList({searchKey}) {
 
     const getLastMessage = (userId) => {
         const chat = allChats.find(chat => chat.members.map(m => m._id).includes(userId))
-        if (!chat) {
+        if (!chat || !chat?.lastMessage) {
             return '';
         } else {
             const msgPrefix = chat?.lastMessage?.sender === currentUser._id ? "You: " : '';
