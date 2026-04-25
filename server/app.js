@@ -21,7 +21,9 @@ app.use("/api/message", messageRouter);
 
 // Test socket connection from client
 io.on('connection', socket => {
-    console.log('Connected with socket id: ' + socket.id);
+    socket.on('send-message-all', data => {
+        console.log(data);
+    })
 })
 
 module.exports = server;
