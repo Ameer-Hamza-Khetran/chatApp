@@ -22,7 +22,7 @@ app.use("/api/message", messageRouter);
 // Test socket connection from client
 io.on('connection', socket => {
     socket.on('send-message-all', data => {
-        console.log(data);
+        socket.emit('send-message-by-server', "Message by server: "+ data.text);
     })
 })
 

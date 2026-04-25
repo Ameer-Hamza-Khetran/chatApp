@@ -11,6 +11,9 @@ function Home() {
 
     useEffect(() => {
         socket.emit('send-message-all', {text: 'Hi from Fahad'})
+        socket.on('send-message-by-server', data => {
+            console.log(data)
+        })
     }, [])
 
     return (
