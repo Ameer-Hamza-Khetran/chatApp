@@ -83,19 +83,24 @@ function UsersList({searchKey}) {
         }
     }
 
+    const getData = () => {
+        if(searchKey === ""){
+            return allChats;
+        }else{
+            return allUsers.filter(user => {
+                return user.firstname?.toLowerCase().includes(searchKey?.toLowerCase()) ||
+                    user.lastname?.toLowerCase().includes(searchKey?.toLowerCase());
+            });
+        }
+    }
+
     return (
-        allUsers.filter(user => {
-            return (
-                (
-                    (user.firstname.toLowerCase().includes(searchKey.toLowerCase()) || 
-                    user.lastname.toLowerCase().includes(searchKey.toLowerCase())) && searchKey
-                ) || 
-                (
-                    (allChats.some(chat => chat.members.map(m => m._id).includes(user._id)))
-                )
-                
-            )
-        }).map((user) => {
+       getData()
+        .map((obj) => {
+        let user = obj;
+        if (obj.members) {
+            user = obj.members.find( mem => mem._id !== currentUser._id)
+        }
         return(
             <div className="user-search-filter" onClick={() => openChat(user._id)} key={user._id}>
             <div className={isSelectedChat(user)? "selected-user" : "filtered-user"}>
