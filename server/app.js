@@ -21,8 +21,13 @@ app.use("/api/message", messageRouter);
 
 // Test socket connection from client
 io.on('connection', socket => {
-    socket.on('send-message-all', data => {
-        socket.emit('send-message-by-server', "Message by server: "+ data.text);
+    socket.on('join-room', userId => {
+        socket.join(userId);
+        console.log('Joined user: '+ userId)
+    })
+
+    socket.on('send-message', data => {
+        socket.to(data.receiver).emit('received-message', data.text)
     })
 })
 
