@@ -4,6 +4,7 @@ import { hideLoader, showLoader } from "../../../redux/loaderSlice";
 import { clearUnreadMessageCount } from "../../../apiCalls/chat";
 import toast from "react-hot-toast";
 import { useEffect, useState } from "react";
+import store from './../../../redux/store'
 import moment from 'moment';
 
 function ChatArea({ socket }) {
@@ -100,9 +101,17 @@ function ChatArea({ socket }) {
         }
 
         socket.off('receive-message').on('receive-message', data => {
-            setAllMessages((prevmsg => [...prevmsg, data]))
+            const selectedChat = store.getState().userReducer.selectedChat;
+            if (selectedChat._id === data.chatId) {
+                setAllMessages((prevmsg => [...prevmsg, data]))      
+            }
         })
     }, [selectedChat])
+
+    useEffect(() => {
+        const msgContainer = document.getElementById('chat-area');
+        msgContainer.scrollTop = msgContainer.scrollHeight;
+    }, [AllMessages])
 
     return(
         <>
@@ -111,7 +120,7 @@ function ChatArea({ socket }) {
                     <div className="app-chat-area-header">
                         {formatName(selectedUser)}
                     </div>
-                    <div className="main-chat-area">
+                    <div className="main-chat-area" id="chat-area">
                         {
                             AllMessages.map(msg => {
                                 const isCurrentUserSender = msg.sender === user._id;
