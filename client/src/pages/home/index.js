@@ -5,17 +5,14 @@ import Sidebar from "./components/sidebar"
 import { io } from "socket.io-client";
 import { useEffect } from "react";
 
+const socket = io('http://localhost:5000')
+
 function Home() {
     const { selectedChat, user } = useSelector(state => state.userReducer)
-    const socket = io('http://localhost:5000')
 
     useEffect(() => {
         if (user) {
             socket.emit('join-room', user._id);
-            socket.emit('send-message', {text: 'Hi Mery! Hello World', receiver: '69b32a15642b8edbed8aa6d7'})
-            socket.on('received-message', data => {
-                console.log(data)
-            })
         }
     }, [user])
 
@@ -24,7 +21,7 @@ function Home() {
             <div className="main-content">
                 <Header></Header>
                 <Sidebar></Sidebar>
-                {selectedChat && <ChatArea></ChatArea>}
+                {selectedChat && <ChatArea socket={socket}></ChatArea>}
             </div>
         </div>
     )

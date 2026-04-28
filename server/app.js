@@ -23,11 +23,12 @@ app.use("/api/message", messageRouter);
 io.on('connection', socket => {
     socket.on('join-room', userId => {
         socket.join(userId);
-        console.log('Joined user: '+ userId)
     })
 
-    socket.on('send-message', data => {
-        socket.to(data.receiver).emit('received-message', data.text)
+    socket.on('send-message', message => {
+        console.log(message)
+        io.to(message.members[0]).to(message.members[1])
+        .emit('receive-message', message)
     })
 })
 
